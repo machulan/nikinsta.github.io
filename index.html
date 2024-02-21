@@ -7,17 +7,87 @@
   <title>Timer game</title>
 
   <style>
-    .blue-button {
-      color: blue;
+    html,
+    body {
+      box-sizing: border-box;
+      margin: 0;
+      height: 100%;
+      padding: 0;
+    }
+
+    .root {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .button {
+      width: 200px;
+      height: 200px;
+      border: 2px solid gray;
+      border-radius: 50%;
+      text-transform: uppercase;
+      font-weight: 700;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 30px;
+      background-color: #eee;
+    }
+
+    .button:hover {
+      background-color: #e5e5e5;
+    }
+
+    .button:active {
+      background-color: #ccc;
     }
   </style>
 </head>
 
 <body>
-  <button class="blue-button" type="button">start</button>
+  <div class="root">
+    <button class="button" type="button">
+      start
+    </button>
+  </div>
 
   <script type="module">
+    const MIN_SECONDS = 2
+    const MAX_SECONDS = 5
+    const startButton = document.querySelector('.button')
+    const audio = new Audio('./alarm.wav')
+    let timer;
 
+    startButton.onclick = start;
+
+    function start() {
+      if (timer) {
+        reset();
+      }
+
+      startButton.style.backgroundColor = 'green';
+      const alarmTime = randomFloatInRange(MIN_SECONDS, MAX_SECONDS) * 1000;
+      timer = setTimeout(alarm, alarmTime);
+    }
+
+    function reset() {
+      startButton.style.backgroundColor = '#eee';
+      clearTimeout(timer);
+    }
+
+    function randomIntegerInRange(min, max) {
+      return Math.floor(Math.random() * (max - min + 1) + min);
+    }
+
+    function randomFloatInRange(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+
+    function alarm() {
+      audio.play()
+      reset();
+    }
   </script>
 </body>
 
