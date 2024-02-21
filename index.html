@@ -13,14 +13,33 @@
       margin: 0;
       height: 100%;
       padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
     }
 
     .root {
       height: 100%;
       width: 100%;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      justify-content: space-evenly;
       align-items: center;
+    }
+
+    .mode {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .mode__button {
+      width: 200px;
+      height: 50px;
+      border: 2px solid gray;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 25px;
+      text-transform: uppercase;
     }
 
     .button {
@@ -47,16 +66,25 @@
 
 <body>
   <div class="root">
+    <!-- <div class="mode">
+      <button type="button" class="mode__button mode-cock">
+        петушара
+      </button>
+      <button type="button" class="mode__button mode-pig">
+        свин
+      </button>
+    </div> -->
     <button class="button" type="button">
       start
     </button>
   </div>
 
   <script type="module">
-    const MIN_SECONDS = 5
-    const MAX_SECONDS = 15
-    const startButton = document.querySelector('.button')
-    const audio = new Audio('./alarm.wav')
+    const MIN_SECONDS = 2;
+    const MAX_SECONDS = 5;
+    const startButton = document.querySelector('.button');
+    const audioPig = new Audio('./alarm-pig.mp3');
+    const audioCock = new Audio('./alarm-cock.wav');
     let timer;
 
     startButton.onclick = start;
@@ -85,7 +113,12 @@
     }
 
     function alarm() {
-      audio.play()
+      if (Math.random() < 0.5) {
+        audioPig.play();
+      } else {
+        audioCock.play();
+      }
+
       reset();
     }
   </script>
